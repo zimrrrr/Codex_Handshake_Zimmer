@@ -5,14 +5,14 @@
 
 Required artifacts:
 
-- [ ] app shell expresses `Agenda`, `School`, `Work`, and `Projects` as first-class navigation targets
-- [ ] right-sidebar agent panel exists as a durable workspace surface
-- [ ] top-level copy and framing reflect `Workspace` as a student operating system
-- [ ] authentication and basic routing support the primary demo flow
+- [x] app shell expresses `Agenda`, `School`, `Work`, and `Projects` as first-class navigation targets
+- [x] right-sidebar agent panel exists as a durable workspace surface
+- [x] top-level copy and framing reflect `Workspace` as a student operating system
+- [x] authentication and basic routing support the primary demo flow
 
 Acceptance:
 
-- [ ] a first-time viewer can identify the product shape in under a minute
+- [x] a first-time viewer can identify the product shape in under a minute
 - [ ] `npm run dev` starts and the app shell loads without crashing
 
 ## Milestone 2 — Agenda And Operational Views
@@ -20,15 +20,15 @@ Acceptance:
 
 Required artifacts:
 
-- [ ] `Agenda` works as the default temporal dashboard
-- [ ] `School`, `Work`, and `Projects` exist as distinct operational views
-- [ ] shared work items can be filtered or grouped into the right surfaces
-- [ ] empty states explain what each view is for
+- [x] `Agenda` works as the default temporal dashboard
+- [x] `School`, `Work`, and `Projects` exist as distinct operational views
+- [x] shared work items can be filtered or grouped into the right surfaces
+- [x] empty states explain what each view is for
 
 Acceptance:
 
-- [ ] the product story is visible even before live integrations are fully connected
-- [ ] navigation and state transitions between views feel coherent
+- [x] the product story is visible even before live integrations are fully connected
+- [x] navigation and state transitions between views feel coherent
 
 ## Milestone 3 — Gmail And Calendar Integration
 **User-visible outcome:** Real user context from Gmail and Calendar strengthens the dashboard and gives the agent meaningful information to reason over.

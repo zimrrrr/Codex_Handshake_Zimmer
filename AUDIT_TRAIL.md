@@ -32,6 +32,39 @@ Use this document to explain:
 
 ## Audit Log
 
+### 2026-03-26 — Milestone 2 operational views implemented
+
+What happened:
+
+- introduced a shared placeholder-backed work item model for Milestone 2 rendering
+- rebuilt `Agenda` into a time-based operational dashboard with summary metrics and local filter controls
+- made `School`, `Work`, and `Projects` distinct views by filtering and regrouping the same underlying item set
+- replaced the copy-only shared route wrapper with an operational page scaffold that supports summaries, controls, grouped sections, and intentional empty states
+- made the assistant panel route-aware so its framing stays relevant to the current surface without adding real assistant behavior
+- added selector tests for the demo data and interactive component coverage for the new page scaffold
+
+Why it mattered:
+
+- this is the first milestone where Workspace starts behaving like a product instead of a shell
+- the user can now understand both the temporal dashboard story and the cross-surface organization model before live integrations exist
+- the demo path from `Agenda` into `School`, `Work`, and `Projects` is materially stronger and easier to explain
+
+Affected milestones and surfaces:
+
+- Milestone 2 — Agenda And Operational Views
+- `Agenda`, `School`, `Work`, and `Projects`
+- shared page scaffold
+- assistant shell relevance
+- placeholder-backed item model and selectors
+
+Verification performed:
+
+- `npm run test -- components/workspace/WorkspacePage.test.tsx components/workspace/WorkspaceSidebar.test.tsx components/workspace/AssistantPanel.test.tsx components/workspace/WorkspaceShell.test.tsx lib/workspace/demoData.test.ts`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run test`
+- `npm run build`
+
 ### 2026-03-26 — Milestone 1 shell reframed around Workspace
 
 What happened:
@@ -147,7 +180,7 @@ Each new entry should include:
 ## Current Milestone Status
 
 - Core Workspace Shell: shell implementation in progress, milestone framing and first-impression UX materially advanced
-- Agenda And Operational Views: planned
+- Agenda And Operational Views: operational surfaces implemented with placeholder-backed grouped views
 - Gmail And Calendar Integration: planned
 - Placeholder Connector Context: planned
 - Agent System And Contextual Chat: planned

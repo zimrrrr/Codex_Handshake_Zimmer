@@ -1,19 +1,37 @@
 import { WorkspacePage } from "@/components/workspace/WorkspacePage";
+import { createFilterStateKey, getProjectsView } from "@/lib/workspace/demoData";
 
 export default function ProjectsPage() {
+  const filterGroups = [
+    {
+      id: "grouping",
+      label: "View by",
+      options: [
+        { id: "MOMENTUM", label: "Momentum" },
+        { id: "STAGE", label: "Stage" }
+      ]
+    }
+  ] as const;
+
+  const views = {
+    [createFilterStateKey(["MOMENTUM"])]: getProjectsView("MOMENTUM"),
+    [createFilterStateKey(["STAGE"])]: getProjectsView("STAGE")
+  };
+
   return (
     <WorkspacePage
       eyebrow="Projects"
       title="Self-directed work that should keep moving"
-      description="Projects gives personal initiatives, side builds, and independent goals a durable home inside Workspace so they are not lost behind classes and career tasks."
-      useCases={[
-        "Personal initiatives, portfolio work, and self-directed builds.",
-        "Ongoing efforts that need momentum even when they are not tied to a class or job.",
-        "A focused view for work the student owns end to end."
-      ]}
-      outcome="The user will use Projects to keep personal work visible, break it into next actions, and prevent high-agency goals from disappearing."
-      emptyStateTitle="Projects will hold momentum, not just ideas"
-      emptyStateDescription="Later milestones can add tasks and imported support context here. This shell already defines why the surface matters."
+      description="Projects gives side builds, portfolio work, and self-directed initiatives a durable place to keep momentum even when school and career work are louder."
+      status="Momentum view"
+      statusDetail="Projects stays in the same shared work model, but it emphasizes self-directed progress instead of deadlines alone."
+      filterGroups={filterGroups}
+      defaultFilters={{
+        grouping: "MOMENTUM"
+      }}
+      views={views}
+      supportTitle="What Projects should communicate"
+      supportDescription="Projects proves Workspace is not only a deadline manager. It also protects high-agency work that can disappear when it has no external system enforcing it."
     />
   );
 }
