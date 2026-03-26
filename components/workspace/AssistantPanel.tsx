@@ -5,17 +5,24 @@ export function AssistantPanel() {
         Assistant
       </p>
       <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-        Suggestion workspace
+        Embedded guidance for what to handle next
       </h2>
       <p className="mt-3 text-sm leading-6 text-muted-foreground">
-        This panel is part of the product architecture from day one so assistant
-        behavior remains contextual to the agenda instead of turning into a free-form
-        chatbot.
+        The assistant stays inside Workspace so priorities, follow-through, and
+        next actions stay grounded in the student’s actual operating context.
       </p>
-      <div className="mt-8 rounded-2xl border border-dashed border-border bg-background/70 p-4">
-        <p className="text-sm font-medium">Planned contract</p>
+      <div className="mt-8 rounded-2xl border border-border bg-background/70 p-4">
+        <p className="text-sm font-medium">What this shell will support</p>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          Structured output only: suggestions plus optional draft subject and body.
+          Prioritization, route-aware suggestions, and app-local next actions the
+          user can explicitly confirm.
+        </p>
+      </div>
+      <div className="mt-4 rounded-2xl border border-dashed border-border bg-background/50 p-4">
+        <p className="text-sm font-medium">Control stays visible</p>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          Workspace can prepare and recommend. It does not send email or take
+          outside action on the user’s behalf.
         </p>
       </div>
     </aside>

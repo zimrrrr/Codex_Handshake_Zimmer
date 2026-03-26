@@ -32,6 +32,37 @@ Use this document to explain:
 
 ## Audit Log
 
+### 2026-03-26 — Milestone 1 shell reframed around Workspace
+
+What happened:
+
+- refactored the core workspace layout around the locked contest product shape
+- replaced generic AI-workspace copy with `Workspace` positioning centered on student operations
+- removed `Drafts` from the primary shell navigation while keeping the route available in code
+- rewrote the shared route surface so `Agenda`, `School`, `Work`, and `Projects` each explain their operational purpose
+- converted the assistant area into a durable desktop shell with an explicit mobile drawer entry point
+- updated component tests to validate the new shell framing and drawer behavior
+
+Why it mattered:
+
+- Milestone 1 is the first impression milestone, and the previous shell still read as a generic architecture placeholder rather than a contest-ready product
+- this pass makes the product legible faster, keeps trust boundaries visible, and aligns the demo story with the repository’s locked `Workspace` definition
+
+Affected milestones and surfaces:
+
+- Milestone 1 — Core Workspace Shell
+- app shell layout
+- left navigation
+- assistant shell
+- route-level framing for `Agenda`, `School`, `Work`, and `Projects`
+
+Verification performed:
+
+- `npm run test -- components/workspace/WorkspacePage.test.tsx components/workspace/WorkspaceSidebar.test.tsx components/workspace/AssistantPanel.test.tsx components/workspace/WorkspaceShell.test.tsx`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+
 ### 2026-03-26 — Contest framing and repository rewrite
 
 What happened:
@@ -115,7 +146,7 @@ Each new entry should include:
 
 ## Current Milestone Status
 
-- Core Workspace Shell: planning and documentation aligned
+- Core Workspace Shell: shell implementation in progress, milestone framing and first-impression UX materially advanced
 - Agenda And Operational Views: planned
 - Gmail And Calendar Integration: planned
 - Placeholder Connector Context: planned

@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Workspace for Students",
-  description: "A Google-centered agenda workspace for students with bounded AI assistance."
+  title: "Workspace",
+  description:
+    "Workspace helps students turn classes, career work, and personal projects into a clear operating system for what matters now."
 };
 
 export default function RootLayout({
