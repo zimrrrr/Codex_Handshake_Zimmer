@@ -64,6 +64,33 @@ Why it mattered:
 
 - this changed the repo from a generic planning-oriented prototype into a contest-directed SaaS build with a clear end-state, trust model, and demo flow
 
+### 2026-03-26 — Project-local implementation skills added
+
+What happened:
+
+- created six project-local Codex skills under `.codex/skills/`
+- added focused skills for UI surfaces, UI states and copy, demo readiness, API contracts, Prisma plus seeds, and release checks
+- tuned the skills to the Workspace product story, trust boundaries, and contest demo needs
+
+Why it mattered:
+
+- this gives future implementation work reusable project-specific guidance instead of relying on generic coding behavior
+- it should improve consistency across UI, copy, API contracts, seeded data, and release verification as the MVP is built
+
+Affected areas:
+
+- UI implementation workflow
+- trust-safe copy workflow
+- demo-polish workflow
+- API contract discipline
+- seeded data realism
+- release-readiness checks
+
+Verification performed:
+
+- confirmed all six skill files exist at the intended project-local paths
+- confirmed each skill has concise trigger-oriented frontmatter and a short workflow body
+
 ## What To Record Going Forward
 
 Add entries when any of the following happens:
