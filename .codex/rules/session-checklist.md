@@ -2,19 +2,21 @@
 
 Before implementing:
 
-- read the relevant source doc and matching `.codex/context/*` summary
-- confirm the task fits the current phase or note the intentional exception
-- check for conflicts with non-negotiable trust boundaries
+- read the relevant `.codex/context/*` document
+- confirm the current task supports the contest demo flow or a direct supporting flow
+- confirm whether the feature is real MVP integration work or placeholder-backed product work
+- check for conflicts with the trust model and scope guardrails
 
 While implementing:
 
-- keep scope tight to the requested outcome
-- prefer typed interfaces and explicit validation
-- avoid introducing features that imply autonomy
+- keep usefulness visible
+- preserve explicit user control over mutations
+- make placeholder-backed behavior intentional and understandable
+- avoid adding invisible infrastructure that does not improve the submission
 
 Before finishing:
 
-- run the narrowest meaningful verification commands first
-- confirm no forbidden send-email path was introduced
-- confirm the implementation still matches the documented product shape
-- update `.codex/` summaries if the source docs changed
+- confirm the result still matches the `Workspace` product story
+- confirm no forbidden send-email or autonomous external action path was introduced
+- confirm milestone alignment with `TASKS.md`
+- run relevant verification for the change

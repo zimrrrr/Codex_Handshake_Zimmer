@@ -4,75 +4,70 @@
 
 - web app
 - desktop-primary, responsive
-- deployed to Vercel
+- optimized for a polished contest demo
 
 ## Stack
 
 - Next.js 14 App Router
 - TypeScript strict mode
 - Tailwind CSS + shadcn/ui
-- NextAuth.js v5 / Auth.js with Google OAuth
+- NextAuth.js v5 / Auth.js
 - PostgreSQL with Prisma ORM
-- local dev DB: Docker Postgres 15
-- hosted DB: Supabase Postgres
-- OpenAI API with `gpt-4o` and `gpt-4o-mini`
+- OpenAI SDK for agent chat and structured outputs
 - Vitest + React Testing Library + Playwright
 
-## Primary Data Model
+## Product Surfaces
 
-Core entities:
+- `Agenda` default dashboard
+- `School` view
+- `Work` view
+- `Projects` view
+- right-sidebar agent chat
 
-- `User`
-- `ConnectedAccount`
-- `AgendaItem`
-- `Draft`
-- `AssistantSession`
-
-Key modeling decisions:
-
-- tasks and events share `AgendaItem`
-- category drives filtered views: `SCHOOL`, `WORK`, `PROJECTS`, `UNCATEGORIZED`
-- source distinguishes app-local items from synced calendar items
-- drafts are saved artifacts, not send actions
-
-## Key Routes
-
-Workspace:
-
-- `/agenda`
-- `/projects`
-- `/school`
-- `/work`
-- `/drafts`
-- `/signin`
-
-API:
-
-- `/api/auth/[...nextauth]`
-- `/api/agenda`
-- `/api/calendar/sync`
-- `/api/tasks`
-- `/api/drafts`
-- `/api/assistant`
+These surfaces should share a coherent data model rather than behave like isolated mini-products.
 
 ## Integration Boundaries
 
-Google APIs in MVP:
+Real MVP integrations:
 
-- Calendar read/write for calendar event creation flows only when explicitly user-triggered
-- Gmail read-only for context, behind feature flag
+- Gmail for read-oriented context
+- Google Calendar for time-based context and scheduling visibility
 
-Never in MVP:
+Placeholder-backed MVP sources:
 
-- Gmail send/write
-- Google Tasks
-- Drive/Docs integrations
-- background webhook complexity for calendar sync
+- Handshake as read-only imported career context
+- Canvas as read-only imported academic context
+- Drive as read-only contextual source
 
-## UI Shape
+Placeholder-backed sources are valid architecture for the contest MVP as long as the product presents them as intentional imported context rather than hidden or broken integrations.
 
-- left navigation shell
-- center agenda/workspace surface
-- right collapsible assistant panel
+## Agent Layer
 
-The assistant should feel embedded in workflow, not like a separate chatbot app.
+The agent layer should support:
+
+- prioritization
+- next-action suggestion
+- contextual question answering
+- view organization support
+- preparation of app-local actions for explicit user approval
+
+The agent layer should use structured outputs where possible so UI behavior remains predictable and typed.
+
+## Trust Model
+
+- no autonomous external mutations
+- no outbound email sending
+- no silent background changes to user-visible app state
+- app-local actions may be prepared by the system but require explicit user confirmation before execution
+
+## Data Model Direction
+
+Core entities likely remain centered on:
+
+- `User`
+- `ConnectedAccount`
+- imported and app-local work items
+- categorized views for `School`, `Work`, and `Projects`
+- assistant sessions and outputs
+
+The implementation may evolve, but the architecture should keep unified context available to both the dashboard and the agent layer.

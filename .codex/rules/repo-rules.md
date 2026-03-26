@@ -1,47 +1,50 @@
 # Repo Rules
 
-## Source of Truth
+## Source Of Truth
 
-- Product intent comes from `PRD.md`
-- technical structure comes from `ARCHITECTURE.md`
-- durable tradeoffs come from `DECISIONS.md`
-- delivery sequence comes from `TASKS.md`
-- operational build instructions come from `AGENTS.md`
+Use sources in this order:
+
+1. The Handshake contest rules PDF as an outer constraint on eligibility, submission behavior, and conduct
+2. `.codex/context/*` as the product and implementation source of truth
+3. `TASKS.md` as the execution order and milestone checklist
+4. `AGENTS.md` as the operating instructions for Codex in this repository
+
+If these conflict, preserve contest compliance first and product clarity second.
 
 ## Non-Negotiables
 
-1. No email sending path may exist anywhere in the codebase.
-2. Use TypeScript only, except config files that require another format.
-3. Never hardcode secrets, tokens, keys, or account identifiers.
-4. The assistant may suggest and draft, but must not autonomously act.
-5. Do not use `any`; prefer concrete types or `unknown` with narrowing.
-
-## Architectural Guardrails
-
-- use Next.js App Router conventions
-- use Prisma through a single shared client
-- use Zod for API validation
-- keep tasks app-local
-- keep Projects/School/Work as filtered views on shared agenda data
-- keep Gmail integration read-only and behind a feature flag
-- avoid webhook-first or infra-heavy MVP additions
+1. No outbound email sending path may exist anywhere in the codebase.
+2. No autonomous external actions may exist anywhere in the codebase.
+3. App-local actions must require explicit user confirmation before execution.
+4. Use TypeScript only, except where another format is required.
+5. Never hardcode secrets, tokens, keys, or account identifiers.
+6. Do not use `any`; prefer concrete types or `unknown` with narrowing.
 
 ## Scope Guardrails
+
+Do build:
+
+- the core student operating surfaces
+- Gmail and Calendar integration in MVP scope
+- realistic placeholder-backed Handshake, Canvas, and Drive context where needed for the demo
+- agent-assisted but user-controlled workflows
 
 Do not build:
 
 - autonomous outbound communication
-- full inbox triage
-- Google Tasks sync
-- LinkedIn or Handshake integrations
-- CRM features
-- recurring task systems
-- collaboration/admin surfaces
-- native mobile app work
+- deep bidirectional sync
+- webhook-first integration architecture
+- full production Handshake, Canvas, or Drive integration scope for this contest MVP
+- collaboration, admin, billing, or enterprise features
+- native mobile product work
+
+## Placeholder Rule
+
+Placeholder-backed sources must surface as realistic imported context in the product experience. Do not hide them as vague future features if they are part of the intended demo story.
 
 ## Workflow Guardrails
 
-- work in phase order unless explicitly redirected
-- do not start a new phase before the current one passes lint and typecheck
-- prefer narrow, shippable increments over broad speculative architecture
-- if a requested change conflicts with a documented decision, surface the conflict explicitly
+- prioritize milestone progress over speculative architecture
+- choose usefulness and demo clarity over backend completeness
+- surface any change that would weaken the locked trust model
+- if a requested change conflicts with the contest-optimized product story, call that out explicitly

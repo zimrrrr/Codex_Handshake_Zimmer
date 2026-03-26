@@ -2,54 +2,70 @@
 
 ## Product
 
-AI Workspace for Students.
+`Workspace` is a student SaaS product.
 
-The MVP is a Google-centered workspace layer for students. It turns fragmented academic and career inputs into:
+It is an operational layer that helps students turn scattered academic and career inputs into an actionable daily operating and management system.
 
-- a unified agenda
-- clear next actions
-- bounded AI assistance for preparation and drafting
+## Core Outcome
 
-## Core Thesis
+The product succeeds when a student can understand what matters now, what to do next, and where each obligation belongs across school, work, and projects.
 
-Students already have tools, but those tools are fragmented and passive. The product wins if it reduces cognitive overhead and makes the user feel:
+## Core Surfaces
 
-- I know what matters today
-- important inputs are visible in one place
-- the assistant helps me prepare and follow through
-- I still control what gets sent and what gets changed
+- `Agenda` — the default dashboard with a temporal view of what matters today and next
+- `School` — a structured surface for courses, assignments, and class-related obligations
+- `Work` — a surface for internships, applications, and career activity
+- `Projects` — a workspace for personal projects and self-directed initiatives
+- right-sidebar agent chat — an embedded assistant that reasons across the user's context
 
 ## Target User
 
 - undergraduate or early-career student
-- comfortable with AI tools
-- already lives in Gmail and Google Calendar
-- likely uses Handshake and LinkedIn outside the product
-- wants leverage without giving up control
+- actively managing academic and career obligations
+- comfortable using AI tools
+- already uses digital systems such as Gmail, Calendar, Canvas, and Handshake
+- wants a system that helps organize action without taking control away
 
-## MVP Boundaries
+## Integration Model
 
-In scope:
+Real MVP integrations:
 
-- unified agenda surface
-- app-local tasks and events
-- Google Calendar integration
-- optional Gmail read-only context
-- assistant-generated suggestions and draft content
+- Gmail
+- Google Calendar
 
-Out of scope:
+Placeholder-backed MVP sources:
 
-- full inbox client
-- autonomous assistant behavior
-- outbound email sending
-- CRM/contact tracking
-- Handshake or LinkedIn integrations
-- Google Tasks sync
-- team/admin workflows
+- Handshake
+- Canvas
+- Drive
+
+The placeholder-backed sources should appear as realistic imported context in the product experience so the system can demonstrate the full intended shape without requiring all live integrations before submission.
+
+## Agent Role
+
+The agent helps the user:
+
+- prioritize today
+- identify next actions
+- organize work into the right view
+- understand context across integrations
+- prepare app-local actions for explicit confirmation
+
+The agent does not autonomously act in external systems.
 
 ## Product Principles
 
-- Google-first, not tool-sprawl-first
-- Agenda is the center of gravity
-- AI assists; user approves
-- opinionated workflow beats endless configurability
+- usefulness over novelty
+- clear operational surfaces over generic AI chat
+- imported context should feel unified
+- user control remains visible and explicit
+- demo clarity matters because the product is being judged quickly
+
+## Out Of Scope For Contest MVP
+
+- autonomous external actions
+- outbound email sending
+- deep production integrations for Handshake, Canvas, or Drive
+- collaboration and team workflows
+- billing, admin, or enterprise surfaces
+- native mobile product work

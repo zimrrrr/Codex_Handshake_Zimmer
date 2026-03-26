@@ -1,100 +1,127 @@
-# TASKS.md — Build Phases and Acceptance Criteria
+# TASKS.md — Milestones And Acceptance Criteria
 
----
+## Milestone 1 — Core Workspace Shell
+**User-visible outcome:** The product clearly presents itself as `Workspace`, with the right navigation, right-sidebar agent chat shell, and a product story centered on student operations rather than a generic assistant.
 
-## Phase 1 — Foundation
-**Goal:** Repo is set up, runs, and all tooling works. No real features yet.
+Required artifacts:
 
-- [x] Scaffold Next.js app architecture with TypeScript, Tailwind, ESLint, and App Router conventions
-- [x] Install: `next-auth@beta`, `@prisma/client`, `prisma`, `zod`, `openai`, `@auth/prisma-adapter`
-- [x] Install and init shadcn/ui baseline config (`components.json`)
-- [x] Create `prisma/schema.prisma` — full schema from architecture context
-- [x] Create `lib/db/prisma.ts` — Prisma singleton
-- [x] Create `.env.example` — all required variables documented
-- [x] Create all route shells: `/agenda`, `/projects`, `/school`, `/work`, `/drafts`, `/signin`, all API routes
-- [x] Add `package.json` scripts: dev, build, lint, typecheck, test, db:push, db:seed, db:studio
-- [x] Configure Vitest
-- [x] `npm run lint` → 0 errors
-- [x] `npm run typecheck` → 0 errors
-- [ ] `npm run dev` → app loads without crashing
+- [ ] app shell expresses `Agenda`, `School`, `Work`, and `Projects` as first-class navigation targets
+- [ ] right-sidebar agent panel exists as a durable workspace surface
+- [ ] top-level copy and framing reflect `Workspace` as a student operating system
+- [ ] authentication and basic routing support the primary demo flow
 
----
+Acceptance:
 
-## Phase 2 — Integration
-**Goal:** User can sign in with Google and their calendar events appear in the database.
+- [ ] a first-time viewer can identify the product shape in under a minute
+- [ ] `npm run dev` starts and the app shell loads without crashing
 
-- [ ] NextAuth v5 config with Google provider, correct scopes
-- [ ] Token stored encrypted in ConnectedAccount on first sign-in
-- [ ] Token refresh working in NextAuth callbacks
-- [ ] `/api/calendar/sync` — fetches events from Google Calendar for next 7 days, upserts into AgendaItem
-- [ ] `/api/tasks` — GET (list), POST (create), PATCH (update), DELETE for app-local tasks
-- [ ] Revoked permission handling — redirects to reconnect screen
-- [ ] `npm run test` → passing
+## Milestone 2 — Agenda And Operational Views
+**User-visible outcome:** The user lands on `Agenda` and can understand how work is organized across time and across the `School`, `Work`, and `Projects` views.
 
----
+Required artifacts:
 
-## Phase 3 — Core Product
-**Goal:** Agenda view shows real data. User can navigate and add tasks.
+- [ ] `Agenda` works as the default temporal dashboard
+- [ ] `School`, `Work`, and `Projects` exist as distinct operational views
+- [ ] shared work items can be filtered or grouped into the right surfaces
+- [ ] empty states explain what each view is for
 
-- [ ] `AgendaView` — 7-day rolling, grouped by day, events + tasks unified
-- [ ] Visual distinction between EVENTs and TASKs
-- [ ] Category badges: SCHOOL, WORK, PROJECTS, UNCATEGORIZED
-- [ ] Sidebar with navigation to all 5 views
-- [ ] Projects/School/Work pages — filtered agenda views (category param)
-- [ ] AddItemButton — opens form to create task or event
-- [ ] Task creation writes to DB and appears in agenda without reload
-- [ ] Empty state for all views
-- [ ] `npm run lint && npm run typecheck && npm run test` → all passing
+Acceptance:
 
----
+- [ ] the product story is visible even before live integrations are fully connected
+- [ ] navigation and state transitions between views feel coherent
 
-## Phase 4 — Assistant
-**Goal:** User can open assistant panel, ask for help on an agenda item, and save a draft.
+## Milestone 3 — Gmail And Calendar Integration
+**User-visible outcome:** Real user context from Gmail and Calendar strengthens the dashboard and gives the agent meaningful information to reason over.
 
-- [ ] AssistantPanel — right collapsible panel
-- [ ] Panel opens contextually when user clicks "Ask assistant" on item
-- [ ] Panel also openable globally (no item context)
-- [ ] `/api/assistant` — accepts messages + optional contextItemId, returns structured JSON
-- [ ] Structured output: `{ suggestions: string[], draftSubject?: string, draftBody?: string }`
-- [ ] "Save as Draft" button → creates Draft record → user lands in Drafts view
-- [ ] No send button exists anywhere
-- [ ] `npm run test` → passing
+Required artifacts:
 
----
+- [ ] Google auth is configured for MVP integration scope
+- [ ] Calendar sync surfaces time-based obligations in the workspace
+- [ ] Gmail-derived context is available in a read-oriented, trust-safe way
+- [ ] revoked or missing permissions fail clearly without breaking the product
 
-## Phase 5 — Trust Layer
-**Goal:** User always knows what the product will and won't do. Boundaries are visible.
+Acceptance:
 
-- [ ] Permission explanation screen before Google OAuth redirect (plain language, no jargon)
-- [ ] All assistant outputs labeled "Suggestion" — not "Action"
-- [ ] Draft editor has "Save" and "Discard" — no "Send"
-- [ ] Drafts view shows copy: "Send through Gmail when ready"
-- [ ] First-run state: prompt to sync calendar after connecting
-- [ ] `npm run test` → passing
+- [ ] Gmail and Calendar improve the core demo flow
+- [ ] no outbound email sending path exists
+- [ ] no autonomous external action path exists
 
----
+## Milestone 4 — Placeholder Connector Context For Handshake / Canvas / Drive
+**User-visible outcome:** The product demonstrates the full intended operating system by showing realistic imported context from Handshake, Canvas, and Drive without requiring full production integrations.
 
-## Phase 6 — Demo
-**Goal:** App can be demoed end-to-end without a real Google account.
+Required artifacts:
 
-- [ ] `prisma/seed.ts` — demo user with 7 days of events and tasks across all categories
-- [ ] `NEXT_PUBLIC_FLAG_DEMO_MODE=true` loads seed data instead of Google API calls
-- [ ] Onboarding: sign in → permission screen → agenda
-- [ ] Happy path polished: agenda → select item → assistant → prep help → save draft → drafts view
-- [ ] All empty states and loading states handled
-- [ ] `npm run db:seed` → seeds without errors
+- [ ] Handshake placeholder-backed data appears as career-oriented imported context
+- [ ] Canvas placeholder-backed data appears as academic imported context
+- [ ] Drive placeholder-backed data appears as contextual support where helpful
+- [ ] placeholder sources are visible and understandable in the UI
 
----
+Acceptance:
 
-## Phase 7 — Validation
-**Goal:** Codebase is clean, tested, and ready for user testing.
+- [ ] placeholders behave like intentional imported context, not disabled future features
+- [ ] the user can see how `School` and `Work` become more useful because of these sources
 
-- [ ] Playwright E2E: happy-path sign in → view agenda
-- [ ] Playwright E2E: add task → appears in agenda
-- [ ] Playwright E2E: ask assistant → save draft → draft appears in drafts
-- [ ] Basic analytics events logged: agenda_opened, task_created, assistant_used, draft_saved
-- [ ] `npm run lint` → 0 errors
-- [ ] `npm run typecheck` → 0 errors
-- [ ] `npm run test` → all passing
-- [ ] `npm run test:e2e` → all passing
-- [ ] `npm run build` → successful production build
+## Milestone 5 — Agent System And Contextual Chat
+**User-visible outcome:** The agent helps the user understand priorities, suggests next actions, and supports management of `School`, `Work`, and `Projects` from full available context.
+
+Required artifacts:
+
+- [ ] `/api/assistant` or equivalent agent entrypoint returns structured output
+- [ ] agent can prioritize current work
+- [ ] agent can suggest app-local tasks or next actions
+- [ ] agent can reason across Gmail, Calendar, and placeholder-backed context
+- [ ] user can explicitly confirm app-local actions prepared by the agent
+
+Acceptance:
+
+- [ ] the assistant feels useful for management, not just drafting
+- [ ] mutations remain user-controlled
+- [ ] the system is easy to explain in a short demo
+
+## Milestone 6 — Demo Data And Seeded Scenarios
+**User-visible outcome:** The product can be demonstrated reliably even without all live integrations.
+
+Required artifacts:
+
+- [ ] seed data supports the primary demo story
+- [ ] seeded data includes school, career, and project context
+- [ ] placeholder-backed Handshake and Canvas records appear realistic
+- [ ] demo mode and loading states are coherent
+
+Acceptance:
+
+- [ ] the product can be demoed end-to-end on demand
+- [ ] the demo still communicates the full intended product shape
+
+## Milestone 7 — Submission Polish And Pitch Readiness
+**User-visible outcome:** The product looks intentional, polished, and clearly useful in screenshots, walkthroughs, and a 3-minute pitch.
+
+Required artifacts:
+
+- [ ] trust boundaries are visible in copy and controls
+- [ ] key screens are polished for first impressions
+- [ ] the primary demo path is smooth and repeatable
+- [ ] the product narrative is obvious from the UI
+
+Acceptance:
+
+- [ ] a judge can quickly understand the value proposition
+- [ ] the app feels like a real MVP business product, not a rough prototype
+
+## Milestone 8 — Validation And Acceptance
+**User-visible outcome:** The submission is reliable enough to show live and strong enough to support contest evaluation.
+
+Required artifacts:
+
+- [ ] happy-path tests cover the main demo flow
+- [ ] major user-visible regressions are caught by validation checks
+- [ ] analytics or lightweight instrumentation capture core interactions if useful
+- [ ] build, lint, typecheck, and relevant tests are green
+
+Acceptance:
+
+- [ ] `npm run lint` passes
+- [ ] `npm run typecheck` passes
+- [ ] `npm run test` passes
+- [ ] `npm run build` succeeds
+- [ ] the product is ready for showcase submission and pitch support

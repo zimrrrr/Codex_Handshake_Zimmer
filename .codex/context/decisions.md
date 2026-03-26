@@ -1,35 +1,38 @@
 # Decision Context
 
-These are the durable decisions that should shape implementation unless explicitly changed.
+These are durable decisions unless explicitly changed.
 
-## Product and Platform
+## Product Shape
 
-- Web app, not native
-- Google-only auth in MVP
-- desktop-primary responsive design
+- The product name is `Workspace`
+- `Agenda` is the default landing view, not the only meaningful surface
+- `School`, `Work`, and `Projects` are first-class views
+- the assistant lives in a right-side panel embedded in workflow
 
-## Data and Scope
+## Integrations
 
-- tasks are app-local, not Google Tasks
-- Projects / School / Work are category filters, not separate models
-- agenda horizon is exactly 7 days: today + 6
+- Gmail and Google Calendar are the real MVP integrations
+- Handshake is first-class in product intent
+- Canvas is first-class in product intent
+- Drive is a placeholder-backed contextual source in MVP
+- placeholder-backed imported context is valid for the contest demo
 
-## AI and Trust
+## Agent And Trust
 
-- assistant lives in a right-side panel
-- OpenAI is the AI provider
-- Gmail context is read-only and feature-flagged
-- there must be no send-email code path anywhere in the codebase
+- the agent should prioritize, suggest tasks, organize views, and answer from context
+- the agent may prepare app-local actions, but the user must explicitly confirm them
+- no autonomous external actions are allowed
+- no outbound email send path may exist anywhere in the repo
 
-## Sync and Ops
+## Delivery Bias
 
-- production DB is Supabase Postgres
-- local DB is Docker Postgres
-- calendar sync is pull-on-load + manual refresh
-- no webhook or push sync in MVP
+- optimize for usefulness first
+- optimize for demo clarity and pitch clarity
+- prefer visible product value over infrastructure completeness
+- prefer realistic placeholders over incomplete live integrations when they strengthen the submission
 
 ## Build Process
 
-- Codex is expected to implement, not just plan
-- work should advance phase by phase
-- each phase must be buildable and pass lint/typecheck before moving on
+- preserve the existing `.codex/` document structure
+- rewrite content heavily instead of creating a new documentation layout
+- use milestone-driven execution in `TASKS.md` rather than old technical phase progression

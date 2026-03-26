@@ -1,41 +1,40 @@
 # Delivery Context
 
-## Phase Order
+## Milestone Order
 
-1. Foundation
-2. Integration
-3. Core product
-4. Assistant
-5. Trust layer
-6. Demo
-7. Validation
+1. Core Workspace Shell
+2. Agenda And Operational Views
+3. Gmail And Calendar Integration
+4. Placeholder Connector Context
+5. Agent System And Contextual Chat
+6. Demo Data And Seeded Scenarios
+7. Submission Polish And Pitch Readiness
+8. Validation And Acceptance
 
-## Phase Gates
+## Delivery Bias
 
-A phase is complete only when:
+Each milestone should improve one of the following:
 
-- `npm run lint` passes
-- `npm run typecheck` passes
-- `npm run test` passes
-- the feature works end-to-end in dev
+- the main demo flow
+- the clarity of the product story
+- the judged usefulness of the product
 
-## Early Priorities
+Avoid milestones that mostly add invisible infrastructure without improving the submission.
 
-Phase 1 should establish:
+## Acceptance Pattern
 
-- Next.js 14 project scaffold
-- strict TypeScript
-- Prisma schema from `ARCHITECTURE.md`
-- route shells and API route shells
-- environment variable documentation
-- package scripts
-- Vitest configuration
+A milestone is complete when:
 
-## Validation Bias
+- the user-visible outcome is present
+- the behavior supports the intended demo flow
+- the implementation respects trust boundaries
+- relevant verification passes
 
-The repo should evolve toward:
+## Demo Flow Anchor
 
-- clear empty and loading states
-- demo mode support
-- stable happy-path flows
-- end-to-end coverage for agenda, task creation, and draft saving
+The build should always support this story:
+
+- user opens `Agenda`
+- user sees unified context from real and placeholder-backed sources
+- agent helps prioritize and suggest action
+- user works across `School`, `Work`, and `Projects`

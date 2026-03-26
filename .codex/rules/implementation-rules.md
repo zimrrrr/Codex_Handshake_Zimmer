@@ -1,34 +1,43 @@
 # Implementation Rules
 
-## File and Code Conventions
+## File And Code Conventions
 
 - React components use PascalCase filenames
 - utility and library files use camelCase filenames
-- shared types belong in `types/index.ts`
+- shared types belong in `types/index.ts` unless there is a clear reason otherwise
 - API route files follow Next.js `route.ts` convention
-- split components before they become monolithic
+- split components before they become difficult to reason about
 
-## API Conventions
+## Product-Biased Engineering Rules
+
+- prefer usefulness over infrastructure depth
+- prefer demo-visible behavior over speculative platform work
+- prefer realistic placeholder-backed context over half-finished integrations
+- preserve clear user control in all agent-assisted workflows
+
+## API And Agent Rules
 
 - return typed JSON responses
 - validate request bodies with Zod
-- use a consistent error shape: `{ error: string, code?: string }`
+- use consistent error shapes: `{ error: string, code?: string }`
+- use structured outputs for agent behavior wherever possible
+- keep agent interfaces explicit and predictable for UI consumption
 
-## Database Conventions
+## Database Rules
 
 - instantiate Prisma only in `lib/db/prisma.ts`
 - avoid route-local Prisma clients
-- preserve the schema described in `ARCHITECTURE.md` unless a documented decision changes it
+- keep the data model aligned with shared operational views rather than fragmented feature-specific silos
 
-## UX Conventions
+## UX Rules
 
-- agenda is the default center surface
-- assistant remains contextual to workflow, not a standalone chat product
-- label assistant output as suggestions
-- preserve visible user control for drafts and mutations
+- `Agenda` is the opening dashboard, but `School`, `Work`, and `Projects` are also first-class
+- the right-sidebar assistant should feel embedded in workflow, not like a separate chatbot app
+- placeholders should look intentional
+- trust boundaries should be obvious in copy and interaction design
 
-## Delivery Conventions
+## Delivery Rules
 
-- prefer building runnable shells before adding complexity
-- keep demoability in mind throughout, not just at the final phase
-- verify changes with lint, typecheck, and tests relevant to the phase
+- build the contest demo flow before expanding sideways
+- keep placeholder and real integration intent explicit in code and UI
+- verify changes with the narrowest meaningful checks first, then broader checks when warranted
