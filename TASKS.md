@@ -5,17 +5,17 @@
 ## Phase 1 — Foundation
 **Goal:** Repo is set up, runs, and all tooling works. No real features yet.
 
-- [ ] `npx create-next-app` with TypeScript, Tailwind, ESLint, App Router
-- [ ] Install: `next-auth@beta`, `@prisma/client`, `prisma`, `zod`, `openai`, `@auth/prisma-adapter`
-- [ ] Install and init shadcn/ui
-- [ ] Create `prisma/schema.prisma` — full schema from ARCHITECTURE.md
-- [ ] Create `lib/db/prisma.ts` — Prisma singleton
-- [ ] Create `.env.example` — all required variables documented
-- [ ] Create all route shells: `/agenda`, `/projects`, `/school`, `/work`, `/drafts`, `/signin`, all API routes
-- [ ] Add `package.json` scripts: dev, build, lint, typecheck, test, db:push, db:seed, db:studio
-- [ ] Configure Vitest
-- [ ] `npm run lint` → 0 errors
-- [ ] `npm run typecheck` → 0 errors
+- [x] Scaffold Next.js app architecture with TypeScript, Tailwind, ESLint, and App Router conventions
+- [x] Install: `next-auth@beta`, `@prisma/client`, `prisma`, `zod`, `openai`, `@auth/prisma-adapter`
+- [x] Install and init shadcn/ui baseline config (`components.json`)
+- [x] Create `prisma/schema.prisma` — full schema from architecture context
+- [x] Create `lib/db/prisma.ts` — Prisma singleton
+- [x] Create `.env.example` — all required variables documented
+- [x] Create all route shells: `/agenda`, `/projects`, `/school`, `/work`, `/drafts`, `/signin`, all API routes
+- [x] Add `package.json` scripts: dev, build, lint, typecheck, test, db:push, db:seed, db:studio
+- [x] Configure Vitest
+- [x] `npm run lint` → 0 errors
+- [x] `npm run typecheck` → 0 errors
 - [ ] `npm run dev` → app loads without crashing
 
 ---
