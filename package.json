@@ -11,6 +11,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "browser:install": "dev-browser install",
+    "browser:signin": "dev-browser --headless run scripts/dev-browser/signin.js",
+    "browser:agenda": "dev-browser --headless run scripts/dev-browser/agenda.js",
+    "browser:agenda:filters": "dev-browser --headless run scripts/dev-browser/agenda-filters.js",
+    "browser:agenda:screenshot": "dev-browser --headless run scripts/dev-browser/agenda-screenshot.js",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio"

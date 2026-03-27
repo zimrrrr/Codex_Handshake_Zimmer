@@ -149,10 +149,48 @@ npm run lint
 npm run typecheck
 npm run test
 npm run test:e2e
+npm run browser:install
+npm run browser:signin
+npm run browser:agenda
+npm run browser:agenda:filters
+npm run browser:agenda:screenshot
 npm run db:push
 npm run db:seed
 npm run db:studio
 ```
+
+## Dev Browser
+
+Use `dev-browser` for local development inspection when working on route behavior, shell composition, filters, empty states, and first-impression flows.
+
+Expectations:
+
+- the CLI is installed globally on the machine via `npm install -g dev-browser`
+- browser dependencies are installed with `npm run browser:install`
+- the local app is already running with `npm run dev`
+
+Preferred use cases:
+
+- inspect `/signin`, `/agenda`, `/school`, `/work`, and `/projects` during implementation
+- get `page.snapshotForAI()` output before choosing selectors on unfamiliar UI
+- run small persistent-page checks instead of writing throwaway Playwright tests
+- save screenshots for visual confirmation or debugging
+
+Constraints:
+
+- `dev-browser` scripts run in a sandboxed QuickJS runtime, not Node.js
+- no `require`, `import`, `process`, `fetch`, or direct filesystem access
+- keep scripts small and single-purpose
+- use Vitest and Playwright for durable regression coverage; use `dev-browser` for interactive local verification
+
+Repo-local helper scripts live in `scripts/dev-browser/`.
+
+Suggested workflow:
+
+1. start `npm run dev`
+2. run one of the `browser:*` scripts for the surface you are changing
+3. use snapshots or screenshots to verify structure and visual state
+4. convert important regressions into formal tests when appropriate
 
 ## What Not To Build
 

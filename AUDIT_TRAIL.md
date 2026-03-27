@@ -32,6 +32,33 @@ Use this document to explain:
 
 ## Audit Log
 
+### 2026-03-27 — Dev Browser workflow documented and scripted
+
+What happened:
+
+- added repo-local `dev-browser` helper scripts for `/signin` and `Agenda` inspection
+- added npm aliases for install, route smoke checks, filter interaction checks, and screenshot capture
+- documented the `dev-browser` workflow in `README.md`
+- updated `.codex/AGENTS.md` so future agent work uses `dev-browser` intentionally for local UI verification
+
+Why it mattered:
+
+- this gives the repo a lightweight browser-inspection workflow that is faster than writing throwaway Playwright tests during active UI development
+- it makes local verification more consistent for both humans and agents working on the contest demo surfaces
+- it clarifies when to use `dev-browser` versus the formal test stack
+
+Affected milestones and surfaces:
+
+- development workflow
+- local UI verification for `Signin` and `Agenda`
+- agent implementation guidance
+
+Verification performed:
+
+- ran `dev-browser` against the local Next.js app for `/signin` and `/agenda`
+- verified persistent-page interaction against `Agenda` filters
+- confirmed screenshot output to `~/.dev-browser/tmp/`
+
 ### 2026-03-26 — Milestone 2 operational views implemented
 
 What happened:
