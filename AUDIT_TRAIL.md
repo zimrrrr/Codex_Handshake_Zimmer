@@ -32,6 +32,40 @@ Use this document to explain:
 
 ## Audit Log
 
+### 2026-03-27 — Figma wireframe UI applied and route shell refined
+
+What happened:
+
+- used the user-provided Figma Make export to replace the prior warm-card Milestone 2 UI with a neutral grayscale wireframe-derived shell
+- rebuilt the main workspace shell around the exported layout patterns: mobile top bar, collapsible left navigation, durable right assistant rail, and route expansion for `Search`, `Chat`, `Connectors`, `Automations`, `User`, and `Settings`
+- replaced the shared approximation on the four primary product surfaces with route-specific layouts for `Agenda`, `School`, `Work`, and `Projects` based on the local `Workspacewirefram-main` export
+- refined the assistant and nav chrome to more closely mirror the exported prototype structure
+- fixed the left sidebar so it locks to viewport height instead of requiring page scroll to reach it, and added a divider directly under `Agenda`
+- removed the temporary `Workspacewirefram-main` reference folder after the relevant UI structure had been transferred into the app
+- excluded the temporary export folder from TypeScript checking while it existed so repo verification reflected actual app code rather than the export's missing external dependencies
+
+Why it mattered:
+
+- this moved Workspace from a loose interpretation of the prototype to a substantially more faithful implementation of the user’s intended wireframe
+- the app shell now reads much closer to the contest-ready product framing the user designed in Figma
+- route-specific layouts make the main product surfaces feel intentionally designed rather than rendered through one generic scaffold
+- the sidebar fix improves usability and removes a layout flaw from the persistent navigation surface
+
+Affected milestones and surfaces:
+
+- Core Workspace Shell
+- Agenda And Operational Views
+- left navigation
+- assistant rail
+- `Agenda`, `School`, `Work`, and `Projects`
+- secondary routes: `Search`, `Chat`, `Connectors`, `Automations`, `User`, `Settings`
+
+Verification performed:
+
+- `npm ci`
+- `npm test -- components/workspace/WorkspaceShell.test.tsx components/workspace/WorkspaceSidebar.test.tsx components/workspace/AssistantPanel.test.tsx components/workspace/WorkspacePage.test.tsx`
+- `npm run typecheck`
+
 ### 2026-03-27 — Dev Browser workflow documented and scripted
 
 What happened:
