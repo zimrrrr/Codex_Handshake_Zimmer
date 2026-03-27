@@ -1,43 +1,30 @@
+import Link from "next/link";
+
+import { WireframeActionLink } from "@/components/workspace/WireframeDetail";
+import { WireframeScaffold } from "@/components/workspace/WireframeScaffold";
+import { schoolCards } from "@/lib/workspace/surfaceData";
+
 export default function SchoolPage() {
   return (
-    <div className="p-8">
+    <WireframeScaffold
+      eyebrow="School"
+      title="THURSDAY, MARCH 26"
+      actions={<WireframeActionLink href="/school/new" label="Add new card" />}
+    >
       <div className="mx-auto max-w-4xl">
-        <div className="mb-2">
-          <div className="mb-1 text-xs uppercase tracking-wider text-gray-500">School</div>
-          <h1 className="text-2xl font-normal">THURSDAY, MARCH 26</h1>
-        </div>
 
         <div className="mt-8">
-          <h3 className="mb-3 text-sm font-medium uppercase">Courses</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              {
-                name: "Workspace App",
-                desc: "Productivity wireframe & prototype",
-                progress: 70,
-                status: "In Progress"
-              },
-              {
-                name: "ECON Research Paper",
-                desc: "Monetary policy & inflation — due Apr 10",
-                progress: 40,
-                status: "In Progress"
-              },
-              {
-                name: "Portfolio Website",
-                desc: "Personal site redesign",
-                progress: 90,
-                status: "Review"
-              },
-              {
-                name: "Finance Club Pitch",
-                desc: "Investment pitch deck for spring showcase",
-                progress: 15,
-                status: "Early Stage"
-              }
-            ].map((project) => (
-              <button
-                key={project.name}
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <h3 className="text-sm font-medium uppercase">Courses</h3>
+            <p className="text-xs uppercase tracking-[0.14em] text-gray-400">
+              Open a card to view details
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {schoolCards.map((project) => (
+              <Link
+                key={project.id}
+                href={`/school/${project.id}`}
                 className="rounded-lg border border-gray-300 bg-white p-4 text-left transition-all hover:border-gray-500 hover:shadow-sm"
               >
                 <div className="mb-2 flex items-start justify-between">
@@ -50,7 +37,7 @@ export default function SchoolPage() {
                   </span>
                 </div>
                 <div className="text-xs text-gray-400">{project.progress}% complete</div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
@@ -89,6 +76,6 @@ export default function SchoolPage() {
           </div>
         </div>
       </div>
-    </div>
+    </WireframeScaffold>
   );
 }

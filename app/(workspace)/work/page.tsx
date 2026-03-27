@@ -1,61 +1,30 @@
+import Link from "next/link";
+
+import { WireframeActionLink } from "@/components/workspace/WireframeDetail";
+import { WireframeScaffold } from "@/components/workspace/WireframeScaffold";
+import { workCards } from "@/lib/workspace/surfaceData";
+
 export default function WorkPage() {
   return (
-    <div className="p-8">
+    <WireframeScaffold
+      eyebrow="Career"
+      title="THURSDAY, MARCH 26"
+      actions={<WireframeActionLink href="/work/new" label="Add new card" />}
+    >
       <div className="mx-auto max-w-4xl">
-        <div className="mb-2">
-          <div className="mb-1 text-xs uppercase tracking-wider text-gray-500">Career</div>
-          <h1 className="text-2xl font-normal">THURSDAY, MARCH 26</h1>
-        </div>
 
         <div className="mt-8">
-          <h3 className="mb-3 text-sm font-medium uppercase">Applications</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              {
-                company: "Northfield Capital",
-                role: "Finance Intern",
-                stage: "Interview",
-                date: "Mar 28",
-                note: "Final round — case study prep needed"
-              },
-              {
-                company: "Summit Analytics",
-                role: "Research Intern",
-                stage: "Applied",
-                date: "Mar 20",
-                note: "Applied via Handshake"
-              },
-              {
-                company: "Acme Corp",
-                role: "Operations Intern",
-                stage: "Offer",
-                date: "Mar 15",
-                note: "Deadline to respond: Apr 1"
-              },
-              {
-                company: "Bridgewater & Co.",
-                role: "Analyst Intern",
-                stage: "Rejected",
-                date: "Mar 10",
-                note: "No feedback provided"
-              },
-              {
-                company: "Midwest Partners",
-                role: "Strategy Intern",
-                stage: "Applied",
-                date: "Mar 24",
-                note: "Referral from Prof. Chen"
-              },
-              {
-                company: "Clearview Advisors",
-                role: "Risk Intern",
-                stage: "Screening",
-                date: "Mar 22",
-                note: "Phone screen scheduled Apr 2"
-              }
-            ].map((app) => (
-              <button
-                key={`${app.company}-${app.role}`}
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <h3 className="text-sm font-medium uppercase">Applications</h3>
+            <p className="text-xs uppercase tracking-[0.14em] text-gray-400">
+              Open a card to view details
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {workCards.map((app) => (
+              <Link
+                key={app.id}
+                href={`/work/${app.id}`}
                 className="rounded-lg border border-gray-300 bg-white p-4 text-left transition-all hover:border-gray-500 hover:shadow-sm"
               >
                 <div className="mb-1 flex items-start justify-between">
@@ -78,7 +47,7 @@ export default function WorkPage() {
                 <div className="text-xs text-gray-500">{app.role}</div>
                 <div className="mt-2 text-xs text-gray-400">{app.note}</div>
                 <div className="mt-1 text-xs text-gray-300">Applied {app.date}</div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
@@ -247,6 +216,6 @@ export default function WorkPage() {
           </p>
         </div>
       </div>
-    </div>
+    </WireframeScaffold>
   );
 }
