@@ -2,6 +2,11 @@
 
 Read this file before writing code in this repository.
 
+Also read:
+
+- `.codex/Dev_path/TODO.md` for the active execution track
+- `.codex/Dev_path/IMPLEMENTATION_GUIDE.md` for definitions and sequencing constraints before expanding scope
+
 ## What You Are Building
 
 `Workspace` is a contest-bound SaaS product for students.
@@ -77,6 +82,13 @@ Optimize for:
 - demo readiness over speculative backend completeness
 - agent value that is easy to explain in a 3-minute pitch
 - current-scope shipping, not long-term architecture for every future connector
+
+Current execution priority:
+
+- lock placeholder-backed product contracts before broad new feature expansion
+- treat `School`, `Work`, and `Projects` as the primary entity surfaces
+- prefer finishing create/edit/detail flows and typed adapters over adding net-new pages
+- do not let the wireframe UI get materially ahead of the backend contract model
 
 Prefer:
 
@@ -217,3 +229,10 @@ A feature is only meaningfully complete when:
 - it respects the trust and autonomy boundaries above
 - it remains legible and useful to a judge seeing the product for the first time
 - relevant verification passes
+
+For the current stage of the repo, meaningful progress also means:
+
+- placeholder and imported-context behavior is explicitly defined
+- entity models are centralized instead of page-local
+- new views unlock a concrete create, edit, inspect, or assistant flow
+- backend scaffolding reduces future rewrite risk
