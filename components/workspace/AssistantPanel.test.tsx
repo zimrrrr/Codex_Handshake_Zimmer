@@ -10,13 +10,18 @@ vi.mock("next/navigation", () => ({
 
 describe("AssistantPanel", () => {
   it("frames the assistant as embedded and user-controlled", () => {
-    render(<AssistantPanel />);
+    render(
+      <AssistantPanel
+        collapsed={false}
+        onToggleCollapse={() => undefined}
+      />
+    );
 
     expect(
-      screen.getByRole("heading", { name: "Embedded guidance for what to handle next" })
+      screen.getByText("Recent agent transcript")
     ).toBeInTheDocument();
     expect(screen.getByText("Agenda support")).toBeInTheDocument();
     expect(screen.getByText(/does not send email or take outside action/i)).toBeInTheDocument();
-    expect(screen.queryByText("Suggestion workspace")).not.toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Plan, @ for context/i)).toBeInTheDocument();
   });
 });

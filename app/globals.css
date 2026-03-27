@@ -3,23 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: 35 33% 97%;
-  --foreground: 210 24% 12%;
+  --background: 0 0% 97%;
+  --foreground: 240 10% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 210 24% 12%;
-  --muted: 32 22% 92%;
-  --muted-foreground: 210 14% 38%;
-  --primary: 204 60% 30%;
+  --card-foreground: 240 10% 10%;
+  --muted: 0 0% 94%;
+  --muted-foreground: 240 5% 45%;
+  --primary: 240 10% 10%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 145 34% 90%;
-  --secondary-foreground: 155 45% 20%;
-  --accent: 22 85% 88%;
-  --accent-foreground: 22 65% 20%;
+  --secondary: 0 0% 92%;
+  --secondary-foreground: 240 10% 10%;
+  --accent: 0 0% 91%;
+  --accent-foreground: 240 10% 10%;
   --destructive: 0 72% 50%;
   --destructive-foreground: 0 0% 100%;
-  --border: 32 15% 84%;
-  --ring: 204 60% 30%;
-  --radius: 1rem;
+  --border: 0 0% 82%;
+  --ring: 240 10% 10%;
+  --radius: 0.625rem;
   --font-sans: "Instrument Sans";
 }
 
@@ -34,10 +34,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(182, 224, 211, 0.55), transparent 32%),
-    radial-gradient(circle at right center, rgba(245, 198, 162, 0.45), transparent 26%),
-    linear-gradient(180deg, rgba(249, 246, 241, 1) 0%, rgba(244, 239, 231, 1) 100%);
+  background: hsl(var(--background));
   color: hsl(var(--foreground));
 }
 

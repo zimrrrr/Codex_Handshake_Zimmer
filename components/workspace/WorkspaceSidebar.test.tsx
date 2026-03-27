@@ -9,15 +9,23 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("WorkspaceSidebar", () => {
-  it("renders the milestone-one navigation and trust copy", () => {
-    render(<WorkspaceSidebar />);
+  it("renders the wireframe navigation and trust copy", () => {
+    render(
+      <WorkspaceSidebar
+        collapsed={false}
+        onToggleCollapse={() => undefined}
+      />
+    );
 
-    expect(screen.getByText("Workspace")).toBeInTheDocument();
+    expect(screen.getByText("workspace")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Search/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Chat/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Agenda" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "School" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Work" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Projects" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Drafts" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^School/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Work/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Projects/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Connectors/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Automations/ })).toBeInTheDocument();
     expect(screen.getByText(/No autonomous external actions/i)).toBeInTheDocument();
   });
 });

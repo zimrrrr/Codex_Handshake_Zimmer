@@ -105,6 +105,6 @@ describe("WorkspacePage", () => {
     await user.click(screen.getByRole("button", { name: "7 days" }));
 
     expect(screen.getByText("Next up")).toBeInTheDocument();
-    expect(screen.getByText("Prepare questions for recruiter screen")).toBeInTheDocument();
+    expect(screen.getAllByText(/Prepare questions for recruiter screen/).length).toBeGreaterThan(0);
   });
 });

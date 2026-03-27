@@ -2,63 +2,86 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { Menu, MessageSquare, X } from "lucide-react";
 
 import { AssistantPanel } from "@/components/workspace/AssistantPanel";
 import { WorkspaceSidebar } from "@/components/workspace/WorkspaceSidebar";
 
 export function WorkspaceShell({ children }: { children: ReactNode }) {
-  const [assistantOpen, setAssistantOpen] = useState(false);
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(false);
+  const [leftCollapsed, setLeftCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(false);
+
+  const hasMobileOverlay = leftOpen || rightOpen;
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
-      <div className="mx-auto flex min-h-[calc(100vh-2rem)] max-w-7xl flex-col gap-4 lg:grid lg:grid-cols-[240px_minmax(0,1fr)_320px]">
-        <WorkspaceSidebar />
+    <div className="relative flex h-screen overflow-hidden bg-background text-foreground">
+      <div
+        aria-hidden={!hasMobileOverlay}
+        className={[
+          "fixed inset-0 z-20 bg-black/30 transition-opacity lg:hidden",
+          hasMobileOverlay ? "opacity-100" : "pointer-events-none opacity-0"
+        ].join(" ")}
+        onClick={() => {
+          setLeftOpen(false);
+          setRightOpen(false);
+        }}
+      />
 
-        <div className="flex min-w-0 flex-col gap-4">
-          <div className="flex items-center justify-between rounded-[24px] border border-border/70 bg-card/70 px-4 py-3 shadow-[0_16px_40px_rgba(24,33,46,0.05)] backdrop-blur lg:hidden">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                Workspace assistant
-              </p>
-              <p className="mt-1 text-sm text-foreground">
-                Open the embedded guide for priorities and next actions.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setAssistantOpen(true)}
-              className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-            >
-              Open
-            </button>
-          </div>
+      <header className="fixed inset-x-0 top-0 z-10 flex h-12 items-center justify-between border-b border-border bg-card px-3 lg:hidden">
+        <button
+          type="button"
+          aria-label="Open navigation"
+          className="flex h-8 w-8 items-center justify-center text-muted-foreground"
+          onClick={() => {
+            setLeftOpen((current) => !current);
+            setRightOpen(false);
+          }}
+        >
+          <Menu size={20} />
+        </button>
+        <p className="text-sm font-medium lowercase tracking-[0.08em]">workspace</p>
+        <button
+          type="button"
+          aria-label={rightOpen ? "Close assistant" : "Open assistant"}
+          className="flex h-8 w-8 items-center justify-center text-muted-foreground"
+          onClick={() => {
+            setRightOpen((current) => !current);
+            setLeftOpen(false);
+          }}
+        >
+          {rightOpen ? <X size={18} /> : <MessageSquare size={18} />}
+        </button>
+      </header>
 
-          <main className="rounded-[28px] border border-border/70 bg-card/80 p-5 shadow-[0_24px_80px_rgba(24,33,46,0.08)] backdrop-blur">
-            {children}
-          </main>
-        </div>
-
-        <div className="hidden lg:block">
-          <AssistantPanel />
-        </div>
+      <div
+        className={[
+          "fixed inset-y-0 left-0 z-30 flex transition-transform duration-200 lg:static lg:translate-x-0",
+          leftOpen ? "translate-x-0" : "-translate-x-full"
+        ].join(" ")}
+      >
+        <WorkspaceSidebar
+          collapsed={leftCollapsed}
+          onToggleCollapse={() => setLeftCollapsed((current) => !current)}
+          onNavigate={() => setLeftOpen(false)}
+        />
       </div>
 
-      {assistantOpen ? (
-        <div className="fixed inset-0 z-50 flex justify-end bg-[rgba(24,33,46,0.28)] p-3 lg:hidden">
-          <div className="flex h-full w-full max-w-sm flex-col gap-3">
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={() => setAssistantOpen(false)}
-                className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-[0_12px_32px_rgba(24,33,46,0.12)]"
-              >
-                Close
-              </button>
-            </div>
-            <AssistantPanel />
-          </div>
-        </div>
-      ) : null}
+      <main className="min-w-0 flex-1 overflow-y-auto pt-12 lg:pt-0">{children}</main>
+
+      <div
+        className={[
+          "fixed inset-y-0 right-0 z-30 transition-transform duration-200 lg:static lg:translate-x-0",
+          rightOpen ? "translate-x-0" : "translate-x-full"
+        ].join(" ")}
+      >
+        <AssistantPanel
+          collapsed={rightCollapsed}
+          onToggleCollapse={() => setRightCollapsed((current) => !current)}
+          onClose={() => setRightOpen(false)}
+        />
+      </div>
     </div>
   );
 }

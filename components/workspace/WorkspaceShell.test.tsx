@@ -10,7 +10,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("WorkspaceShell", () => {
-  it("opens the assistant drawer from the mobile entry point", async () => {
+  it("opens the assistant drawer from the mobile top bar", async () => {
     const user = userEvent.setup();
 
     render(
@@ -19,11 +19,12 @@ describe("WorkspaceShell", () => {
       </WorkspaceShell>
     );
 
-    expect(screen.queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open assistant" })).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Open" }));
+    await user.click(screen.getByRole("button", { name: "Open assistant" }));
 
-    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open assistant" })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Close assistant" }).length).toBeGreaterThan(0);
     expect(screen.getByText("Main content")).toBeInTheDocument();
   });
 });

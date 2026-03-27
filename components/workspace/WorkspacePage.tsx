@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { WireframePanel, WireframeScaffold } from "@/components/workspace/WireframeScaffold";
 import {
   createFilterStateKey,
   type WorkspaceSection,
@@ -38,6 +39,65 @@ type WorkspacePageProps = {
   supportDescription: string;
 };
 
+function SummaryMetricCard({ metric }: { metric: WorkspaceSummaryMetric }) {
+  return (
+    <div className="rounded-md border border-border bg-card p-4">
+      <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{metric.label}</p>
+      <p className="mt-3 text-2xl font-medium text-foreground">{metric.value}</p>
+      <p className="mt-2 text-sm leading-6 text-muted-foreground">{metric.detail}</p>
+    </div>
+  );
+}
+
+function SectionRow({
+  label,
+  value,
+  trailing
+}: {
+  label: string;
+  value: string;
+  trailing?: string;
+}) {
+  return (
+    <div className="flex h-10 items-center justify-between rounded border border-border px-3 text-sm text-foreground">
+      <div className="min-w-0">
+        <span className="truncate">• {label}</span>
+        {value ? <span className="ml-3 text-xs text-muted-foreground">{value}</span> : null}
+      </div>
+      {trailing ? <span className="ml-3 flex-shrink-0 text-xs text-muted-foreground">{trailing}</span> : null}
+    </div>
+  );
+}
+
+function SectionCard({ section }: { section: WorkspaceSection }) {
+  return (
+    <WireframePanel title={section.title}>
+      <p className="mb-3 text-xs uppercase tracking-[0.14em] text-muted-foreground">
+        {section.description}
+      </p>
+      <div className="space-y-2">
+        {section.items.length > 0 ? (
+          section.items.map((item) => (
+            <SectionRow
+              key={item.id}
+              label={item.title}
+              value={`${item.category} · ${item.type}`}
+              trailing={item.timeLabel}
+            />
+          ))
+        ) : (
+          <div className="rounded border border-dashed border-border px-3 py-4">
+            <p className="text-sm font-medium text-foreground">{section.emptyTitle}</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {section.emptyDescription}
+            </p>
+          </div>
+        )}
+      </div>
+    </WireframePanel>
+  );
+}
+
 export function WorkspacePage({
   eyebrow,
   title,
@@ -65,45 +125,37 @@ export function WorkspacePage({
   );
   const activeView = views[viewKey] ?? views.default ?? Object.values(views)[0];
   const hasItems = activeView.sections.some((section) => section.items.length > 0);
+  const visibleItems = activeView.sections.flatMap((section) => section.items);
+  const milestoneItems = visibleItems.slice(0, 3);
+  const recentItems = [...visibleItems].reverse().slice(0, 3);
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="border-b border-border/80 pb-6">
+    <WireframeScaffold eyebrow={eyebrow} title={title}>
+      <div className="mb-8 max-w-4xl">
         <div className="flex flex-wrap items-center gap-3">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-muted-foreground">
-            {eyebrow}
-          </p>
-          <span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+          <span className="rounded border border-border px-3 py-1 text-xs uppercase tracking-[0.14em] text-muted-foreground">
             {status}
           </span>
         </div>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">
-          {description}
-        </p>
-        <p className="mt-4 max-w-3xl text-sm leading-6 text-foreground/80">{statusDetail}</p>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{description}</p>
+        <p className="mt-3 text-sm leading-6 text-foreground">{statusDetail}</p>
       </div>
 
-      <div className="grid gap-4 py-6 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3">
         {activeView.summary.map((metric) => (
-          <section
-            key={metric.label}
-            className="rounded-[24px] border border-border bg-background/80 p-5"
-          >
-            <p className="text-sm font-medium text-muted-foreground">{metric.label}</p>
-            <p className="mt-3 text-2xl font-semibold tracking-tight">{metric.value}</p>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">{metric.detail}</p>
-          </section>
+          <SummaryMetricCard key={metric.label} metric={metric} />
         ))}
       </div>
 
       {filterGroups.length > 0 ? (
-        <section className="rounded-[24px] border border-border bg-background/75 p-5">
-          <div className="flex flex-col gap-4">
+        <div className="mt-8 rounded-md border border-border bg-card p-4">
+          <div className="space-y-4">
             {filterGroups.map((group) => (
               <div key={group.id}>
-                <p className="text-sm font-medium text-muted-foreground">{group.label}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <p className="mb-3 text-sm font-medium uppercase tracking-[0.16em] text-foreground">
+                  {group.label}
+                </p>
+                <div className="flex flex-wrap gap-2">
                   {group.options.map((option) => {
                     const active = activeFilters[group.id] === option.id;
 
@@ -117,11 +169,12 @@ export function WorkspacePage({
                             [group.id]: option.id
                           }))
                         }
-                        className={
+                        className={[
+                          "rounded border px-3 py-2 text-sm transition-colors",
                           active
-                            ? "rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-                            : "rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-muted/70"
-                        }
+                            ? "border-foreground/50 bg-muted text-foreground"
+                            : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+                        ].join(" ")}
                       >
                         {option.label}
                       </button>
@@ -131,87 +184,57 @@ export function WorkspacePage({
               </div>
             ))}
           </div>
-        </section>
+        </div>
       ) : null}
 
-      <div className="mt-6 grid gap-4">
+      <div className="mt-8 grid gap-8 lg:grid-cols-2">
         {hasItems ? (
-          activeView.sections.map((section) => (
-            <section
-              key={section.id}
-              className="rounded-[24px] border border-border bg-background/80 p-5"
-            >
-              <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h2 className="text-lg font-semibold">{section.title}</h2>
-                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                    {section.description}
-                  </p>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  {section.items.length} visible
-                </span>
-              </div>
-
-              {section.items.length > 0 ? (
-                <div className="mt-4 grid gap-3 lg:grid-cols-2">
-                  {section.items.map((item) => (
-                    <article
-                      key={item.id}
-                      className="rounded-[22px] border border-border/80 bg-card p-4"
-                    >
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
-                          {item.category}
-                        </span>
-                        <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-medium text-secondary-foreground">
-                          {item.type}
-                        </span>
-                        <span className="rounded-full bg-background px-3 py-1 text-xs text-muted-foreground">
-                          {item.source}
-                        </span>
-                      </div>
-                      <h3 className="mt-4 text-lg font-semibold tracking-tight">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm font-medium text-foreground/80">
-                        {item.timeLabel}
-                      </p>
-                      <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                        {item.notes}
-                      </p>
-                      <div className="mt-4 rounded-2xl border border-dashed border-border px-3 py-2 text-sm text-foreground/80">
-                        {item.status}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <div className="mt-4 rounded-[22px] border border-dashed border-border bg-card/70 p-4">
-                  <p className="text-sm font-medium">{section.emptyTitle}</p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {section.emptyDescription}
-                  </p>
-                </div>
-              )}
-            </section>
-          ))
+          activeView.sections.map((section) => <SectionCard key={section.id} section={section} />)
         ) : (
-          <section className="rounded-[24px] border border-dashed border-border bg-background/70 p-6">
-            <h2 className="text-lg font-semibold">{activeView.emptyTitle}</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+          <div className="rounded border border-dashed border-border px-4 py-5 lg:col-span-2">
+            <p className="text-sm font-medium text-foreground">{activeView.emptyTitle}</p>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
               {activeView.emptyDescription}
             </p>
-          </section>
+          </div>
         )}
       </div>
 
-      <section className="mt-6 rounded-[28px] border border-dashed border-border bg-background/60 p-6">
-        <h2 className="text-lg font-semibold">{supportTitle}</h2>
+      <div className="mt-8 grid gap-8 md:grid-cols-2">
+        <WireframePanel title="Upcoming milestones">
+          <div className="space-y-2">
+            {milestoneItems.map((item) => (
+              <SectionRow
+                key={`milestone-${item.id}`}
+                label={item.title}
+                value={item.category}
+                trailing={item.timeLabel}
+              />
+            ))}
+          </div>
+        </WireframePanel>
+
+        <WireframePanel title="Recent activity">
+          <div className="space-y-2">
+            {recentItems.map((item) => (
+              <SectionRow
+                key={`recent-${item.id}`}
+                label={item.status}
+                value={item.source}
+              />
+            ))}
+          </div>
+        </WireframePanel>
+      </div>
+
+      <div className="mt-8 rounded-md border border-border bg-card p-4">
+        <p className="text-sm font-medium uppercase tracking-[0.16em] text-foreground">
+          {supportTitle}
+        </p>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
           {supportDescription}
         </p>
-      </section>
-    </div>
+      </div>
+    </WireframeScaffold>
   );
 }
